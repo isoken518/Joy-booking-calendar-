@@ -7,9 +7,16 @@
     <style>
         :root {
             --primary-color: #ff6b81;
-            --bg-color: #fff0f3;
-            --card-bg: #ffffff;
-            --text-color: #2d3436;
+            --bg-color: #0f0c20;
+            --card-bg: #1e1b32;
+            --text-color: #ffffff;
+            --accent-color: #ffd166;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
         }
 
         body {
@@ -20,206 +27,353 @@
             justify-content: center;
             align-items: center;
             min-height: 100vh;
-            margin: 0;
             padding: 20px;
-            box-sizing: border-box;
+            overflow-x: hidden;
+            position: relative;
         }
 
+        /* STARRY BACKGROUND */
+        .stars-bg {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 0;
+        }
+
+        .star {
+            position: absolute;
+            background: white;
+            border-radius: 50%;
+            animation: twinkle var(--duration) infinite ease-in-out;
+        }
+
+        @keyframes twinkle {
+            0%, 100% { opacity: 0.2; transform: scale(0.8); }
+            50% { opacity: 1; transform: scale(1.3); }
+        }
+
+        /* CARD CONTAINER */
         .container {
             background: var(--card-bg);
-            border-radius: 20px;
-            padding: 28px;
+            border-radius: 24px;
+            padding: 30px 24px;
             max-width: 420px;
             width: 100%;
-            box-shadow: 0 10px 25px rgba(255, 107, 129, 0.15);
-            border: 2px solid #ffeaa7;
+            box-shadow: 0 15px 35px rgba(255, 107, 129, 0.2);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            position: relative;
+            z-index: 1;
+            text-align: center;
         }
 
-        .header {
-            text-align: center;
-            margin-bottom: 20px;
+        .step {
+            display: none;
+            animation: fadeIn 0.4s ease;
+        }
+
+        .step.active {
+            display: block;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
         }
 
         h1 {
-            color: #d63031;
+            color: #ff758c;
             font-size: 1.6rem;
-            margin-bottom: 8px;
+            margin-bottom: 12px;
+        }
+
+        h2 {
+            font-size: 1.3rem;
+            margin-bottom: 16px;
+            color: #ffffff;
         }
 
         p.sub-title {
             font-size: 0.95rem;
-            color: #636e72;
-            margin: 4px 0;
+            color: #cbd5e1;
+            line-height: 1.5;
+            margin-bottom: 20px;
         }
 
         .badge {
-            background-color: #ff7675;
+            background: linear-gradient(135deg, #ff758c, #ff7eb3);
             color: white;
-            font-size: 0.75rem;
+            font-size: 0.8rem;
             font-weight: bold;
-            padding: 4px 12px;
-            border-radius: 12px;
+            padding: 6px 14px;
+            border-radius: 20px;
             display: inline-block;
-            margin-top: 6px;
+            margin-bottom: 16px;
         }
 
-        .section-title {
-            font-weight: 600;
-            margin-top: 18px;
-            margin-bottom: 8px;
-            font-size: 0.95rem;
-            color: #2d3436;
+        /* 2-COLUMN GRID FOR NAMES */
+        .grid-2col {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 12px;
+            margin-bottom: 20px;
         }
 
-        .radio-group {
-            display: flex;
-            flex-direction: column;
-            gap: 8px;
-        }
-
-        .radio-label {
-            display: flex;
-            align-items: center;
-            padding: 10px 14px;
-            border: 2px solid #f1f2f6;
-            border-radius: 12px;
+        .option-card {
+            background: rgba(255, 255, 255, 0.05);
+            border: 2px solid rgba(255, 255, 255, 0.1);
+            border-radius: 16px;
+            padding: 16px 10px;
             cursor: pointer;
             transition: all 0.2s ease;
             font-size: 0.95rem;
+            font-weight: 500;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            min-height: 60px;
         }
 
-        .radio-label:hover {
+        .option-card:hover {
             border-color: var(--primary-color);
-            background-color: #fff0f3;
+            background: rgba(255, 107, 129, 0.15);
         }
 
-        input[type="radio"] {
-            margin-right: 12px;
-            accent-color: var(--primary-color);
+        .option-card.selected {
+            border-color: var(--primary-color);
+            background: var(--primary-color);
+            color: white;
+            font-weight: bold;
+            box-shadow: 0 4px 12px rgba(255, 107, 129, 0.4);
         }
 
-        input[type="text"] {
+        /* REAL CALENDAR GRID */
+        .calendar-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-weight: bold;
+            margin-bottom: 12px;
+            padding: 0 8px;
+            color: var(--accent-color);
+        }
+
+        .calendar-grid {
+            display: grid;
+            grid-template-columns: repeat(7, 1fr);
+            gap: 6px;
+            margin-bottom: 20px;
+        }
+
+        .cal-day-name {
+            font-size: 0.75rem;
+            color: #94a3b8;
+            padding-bottom: 6px;
+        }
+
+        .cal-date {
+            aspect-ratio: 1;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 10px;
+            font-size: 0.85rem;
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            cursor: pointer;
+        }
+
+        .cal-date.disabled {
+            opacity: 0.3;
+            cursor: not-allowed;
+            background: transparent;
+            border: none;
+        }
+
+        .cal-date:not(.disabled):hover {
+            border-color: var(--primary-color);
+            background: rgba(255, 107, 129, 0.2);
+        }
+
+        .cal-date.selected {
+            background: var(--primary-color);
+            color: white;
+            font-weight: bold;
+            border-color: var(--primary-color);
+            box-shadow: 0 2px 8px rgba(255, 107, 129, 0.4);
+        }
+
+        /* BUTTONS & INPUTS */
+        button.btn-next {
             width: 100%;
-            padding: 12px;
-            border: 2px solid #f1f2f6;
-            border-radius: 12px;
-            font-size: 0.95rem;
-            box-sizing: border-box;
-            margin-top: 8px;
-        }
-
-        button {
-            width: 100%;
-            background-color: var(--primary-color);
+            background: linear-gradient(135deg, #ff758c, #ff7eb3);
             color: white;
             border: none;
             padding: 14px;
             font-size: 1rem;
             font-weight: bold;
-            border-radius: 12px;
+            border-radius: 14px;
             cursor: pointer;
-            margin-top: 24px;
-            box-shadow: 0 4px 12px rgba(255, 107, 129, 0.3);
-            transition: background-color 0.2s;
+            margin-top: 10px;
+            box-shadow: 0 4px 15px rgba(255, 107, 129, 0.3);
+            transition: transform 0.1s, opacity 0.2s;
         }
 
-        button:hover {
-            background-color: #ee5253;
+        button.btn-next:active {
+            transform: scale(0.98);
+        }
+
+        input[type="text"] {
+            width: 100%;
+            padding: 14px;
+            border: 2px solid rgba(255, 255, 255, 0.1);
+            background: rgba(0, 0, 0, 0.2);
+            color: white;
+            border-radius: 12px;
+            font-size: 0.95rem;
+            margin-top: 12px;
+            margin-bottom: 16px;
+            outline: none;
+        }
+
+        input[type="text"]:focus {
+            border-color: var(--primary-color);
         }
 
         .fee-card {
-            background-color: #fff9db;
-            border: 1.5px dashed #fcc419;
-            border-radius: 12px;
-            padding: 14px;
-            text-align: center;
+            background: rgba(255, 209, 102, 0.1);
+            border: 1.5px dashed var(--accent-color);
+            border-radius: 16px;
+            padding: 16px;
             margin: 16px 0;
         }
 
         .fee-amount {
-            font-size: 1.4rem;
+            font-size: 1.6rem;
             font-weight: 800;
-            color: #d9480f;
-            margin: 4px 0;
-        }
-
-        .payment-screen, .confirmation {
-            display: none;
-        }
-
-        .summary-box {
-            background: #fff0f3;
-            border-radius: 12px;
-            padding: 16px;
-            margin: 16px 0;
-            text-align: left;
+            color: var(--accent-color);
+            margin: 6px 0;
         }
 
         .bank-details {
-            background: #f8f9fa;
-            border: 1px solid #e9ecef;
-            border-radius: 10px;
-            padding: 12px;
-            margin-top: 10px;
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 12px;
+            padding: 14px;
+            text-align: left;
+            margin-bottom: 16px;
+            font-size: 0.9rem;
+            line-height: 1.6;
         }
 
-        .bank-details p {
-            margin: 6px 0;
-            font-size: 0.9rem;
+        .summary-box {
+            background: rgba(255, 107, 129, 0.1);
+            border: 1px solid var(--primary-color);
+            border-radius: 14px;
+            padding: 16px;
+            margin: 16px 0;
+            text-align: left;
+            font-size: 0.95rem;
+            line-height: 1.7;
         }
     </style>
 </head>
 <body>
 
+<div class="stars-bg" id="starsBg"></div>
+
 <div class="container">
-    <form id="bookingForm" action="https://formspree.io/f/Joyclifford71" method="POST">
+    <form id="bookingForm" action="https://formspree.io/f/xnpngyqd" method="POST">
         
-        <!-- STEP 1: DATE & TIME SELECTION -->
-        <div id="step1">
-            <div class="header">
-                <h1>✨ Joy’s Booking Calendar ✨</h1>
-                <p class="sub-title">Congratulations! You’ve been selected to book a date with Joy.</p>
-                <div class="badge">🔥 Limited Availability — Book Quickly!</div>
-            </div>
-
-            <div class="section-title">Who’s booking?</div>
-            <div class="radio-group">
-                <label class="radio-label"><input type="radio" name="Who is booking" value="Collins" required> Collins</label>
-                <label class="radio-label"><input type="radio" name="Who is booking" value="We met today"> We met today</label>
-                <label class="radio-label"><input type="radio" name="Who is booking" value="Mr Who?"> Mr Who?</label>
-                <label class="radio-label"><input type="radio" name="Who is booking" value="Babe ❤️"> Babe ❤️</label>
-                <label class="radio-label"><input type="radio" name="Who is booking" value="Secret Admirer 🤫"> Secret Admirer 🤫</label>
-                <label class="radio-label"><input type="radio" name="Who is booking" value="VIP Special Guest ✨"> VIP Special Guest ✨</label>
-            </div>
-
-            <div class="section-title">Choose your date</div>
-            <div class="radio-group">
-                <label class="radio-label"><input type="radio" name="Selected Date" value="Wednesday, Sep 30" required> 📅 Wednesday, Sep 30</label>
-                <label class="radio-label"><input type="radio" name="Selected Date" value="Friday, Oct 2"> 📅 Friday, Oct 2</label>
-                <label class="radio-label"><input type="radio" name="Selected Date" value="Monday, Oct 5"> 📅 Monday, Oct 5</label>
-            </div>
-
-            <div class="section-title">Choose your time</div>
-            <div class="radio-group">
-                <label class="radio-label"><input type="radio" name="Selected Time" value="6:00 PM" required> 🕐 6:00 PM</label>
-                <label class="radio-label"><input type="radio" name="Selected Time" value="7:30 PM"> 🕐 7:30 PM</label>
-                <label class="radio-label"><input type="radio" name="Selected Time" value="8:00 PM"> 🕐 8:00 PM</label>
-            </div>
-
-            <button type="button" onclick="goToPayment()">PROCEED TO PAYMENT 💳</button>
+        <!-- STEP 1: WELCOME SCREEN -->
+        <div class="step active" id="step1">
+            <div class="badge">🔥 Exclusive Invite</div>
+            <h1>✨ Date with Joy ✨</h1>
+            <p class="sub-title">Congratulations! You’ve been specially selected to book a date with Joy.</p>
+            <button type="button" class="btn-next" onclick="nextStep(2)">CONTINUE ✨</button>
         </div>
 
-        <!-- STEP 2: PAYMENT SCREEN -->
-        <div id="step2" class="payment-screen">
-            <div class="header">
-                <h1>💳 Confirm Booking Fee</h1>
-                <p class="sub-title">To secure your reservation spot, a commitment fee is required.</p>
+        <!-- STEP 2: WHO IS BOOKING (2-COLUMN GRID) -->
+        <div class="step" id="step2">
+            <h2>Who is booking? 👤</h2>
+            <div class="grid-2col">
+                <div class="option-card" onclick="selectOption('Who is booking', 'Collins', this)">Collins</div>
+                <div class="option-card" onclick="selectOption('Who is booking', 'We met today', this)">We met today</div>
+                <div class="option-card" onclick="selectOption('Who is booking', 'Mr Who?', this)">Mr Who?</div>
+                <div class="option-card" onclick="selectOption('Who is booking', 'Babe ❤️', this)">Babe ❤️</div>
+                <div class="option-card" onclick="selectOption('Who is booking', 'Secret Admirer 🤫', this)">Secret Admirer 🤫</div>
+                <div class="option-card" onclick="selectOption('Who is booking', 'VIP Special Guest ✨', this)">VIP Special Guest ✨</div>
             </div>
+            <input type="hidden" name="Who is booking" id="input_who">
+            <button type="button" class="btn-next" onclick="validateStep(2)">CONTINUE ➡️</button>
+        </div>
+
+        <!-- STEP 3: CHOOSE TIME -->
+        <div class="step" id="step3">
+            <h2>Choose Time 🕐</h2>
+            <div class="grid-2col">
+                <div class="option-card" onclick="selectOption('Selected Time', '6:00 PM', this)">🕐 6:00 PM</div>
+                <div class="option-card" onclick="selectOption('Selected Time', '7:30 PM', this)">🕐 7:30 PM</div>
+                <div class="option-card" onclick="selectOption('Selected Time', '8:00 PM', this)">🕐 8:00 PM</div>
+                <div class="option-card" onclick="selectOption('Selected Time', '9:00 PM', this)">🕐 9:00 PM</div>
+            </div>
+            <input type="hidden" name="Selected Time" id="input_time">
+            <button type="button" class="btn-next" onclick="validateStep(3)">CONTINUE ➡️</button>
+        </div>
+
+        <!-- STEP 4: REAL CALENDAR DATE SELECTION -->
+        <div class="step" id="step4">
+            <h2>Select Date 📅</h2>
+            <div class="calendar-header">
+                <span>October 2026</span>
+            </div>
+            <div class="calendar-grid">
+                <div class="cal-day-name">S</div><div class="cal-day-name">M</div><div class="cal-day-name">T</div>
+                <div class="cal-day-name">W</div><div class="cal-day-name">T</div><div class="cal-day-name">F</div>
+                <div class="cal-day-name">S</div>
+
+                <!-- Empty offset cells for grid -->
+                <div class="cal-date disabled"></div><div class="cal-date disabled"></div><div class="cal-date disabled"></div>
+
+                <!-- Active booking days -->
+                <div class="cal-date disabled">1</div>
+                <div class="cal-date" onclick="selectDate('Fri, Oct 2', this)">2</div>
+                <div class="cal-date disabled">3</div>
+                <div class="cal-date disabled">4</div>
+                <div class="cal-date" onclick="selectDate('Mon, Oct 5', this)">5</div>
+                <div class="cal-date disabled">6</div>
+                <div class="cal-date" onclick="selectDate('Wed, Oct 7', this)">7</div>
+                <div class="cal-date disabled">8</div>
+                <div class="cal-date" onclick="selectDate('Fri, Oct 9', this)">9</div>
+                <div class="cal-date disabled">10</div>
+                <div class="cal-date disabled">11</div>
+                <div class="cal-date" onclick="selectDate('Mon, Oct 12', this)">12</div>
+                <div class="cal-date disabled">13</div>
+                <div class="cal-date disabled">14</div>
+                <div class="cal-date disabled">15</div>
+                <div class="cal-date" onclick="selectDate('Fri, Oct 16', this)">16</div>
+            </div>
+            <input type="hidden" name="Selected Date" id="input_date">
+            <button type="button" class="btn-next" onclick="validateStep(4)">CONTINUE ➡️</button>
+        </div>
+
+        <!-- STEP 5: CONFIRMATION PROMPT WITH SHINING STARS -->
+        <div class="step" id="step5">
+            <div style="font-size: 2.5rem; margin-bottom: 10px;">✨🌟✨</div>
+            <h2>Confirm Your Date with Joy</h2>
+            <p class="sub-title">You are one step away from locking in your reservation spot!</p>
+            <button type="button" class="btn-next" onclick="nextStep(6)">PROCEED TO PAYMENT 💳</button>
+        </div>
+
+        <!-- STEP 6: PAYMENT METHOD -->
+        <div class="step" id="step6">
+            <h2>💳 Commitment Fee</h2>
+            <p class="sub-title">To lock in your selected slot, please send the reservation fee below:</p>
 
             <div class="fee-card">
-                <div style="font-size: 0.85rem; color: #868e96; text-transform: uppercase;">Reservation Fee</div>
+                <div style="font-size: 0.8rem; color: #cbd5e1; text-transform: uppercase;">Reservation Deposit</div>
                 <div class="fee-amount">₦30,000</div>
-                <div style="font-size: 0.8rem; color: #495057;">Non-refundable deposit</div>
             </div>
 
             <div class="bank-details">
@@ -228,64 +382,103 @@
                 <p><strong>Account Name:</strong> ISOKEN JOY CLIFFORD</p>
             </div>
 
-            <div class="section-title">Enter Sender Name / Payment Reference:</div>
-            <input type="text" name="Payment Reference" placeholder="e.g. Paid via Collins / Transfer Ref" required>
+            <p style="font-size: 0.85rem; color: #cbd5e1; text-align: left; margin-top: 10px;">Enter Sender Name / Payment Ref:</p>
+            <input type="text" name="Payment Reference" id="input_payment" placeholder="e.g. Paid via Collins / Ref" required>
 
-            <button type="submit">CONFIRM & BOOK DATE 💕</button>
+            <button type="submit" class="btn-next">CONFIRM & BOOK DATE 💕</button>
         </div>
 
     </form>
 
-    <!-- STEP 3: FINAL CONFIRMATION -->
-    <div class="confirmation" id="confirmationScreen">
-        <div class="header">
-            <h2>YOU’RE BOOKED! 💕</h2>
-            <p class="sub-title">Your date request & payment details have been logged!</p>
-        </div>
-        
+    <!-- STEP 7: FINAL SUCCESS -->
+    <div class="step" id="step7">
+        <div style="font-size: 2.5rem; margin-bottom: 10px;">🎉💕</div>
+        <h2>YOU’RE BOOKED!</h2>
+        <p class="sub-title">Your date request & payment info have been sent to Joy!</p>
+
         <div class="summary-box">
             <p><strong>Appointment:</strong> Date with Joy</p>
             <p><strong>Booked By:</strong> <span id="resName"></span></p>
-            <p><strong>Date:</strong> <span id="resDate"></span></p>
             <p><strong>Time:</strong> <span id="resTime"></span></p>
-            <p><strong>Status:</strong> ⏳ Pending Deposit Verification (₦30,000)</p>
+            <p><strong>Date:</strong> <span id="resDate"></span></p>
+            <p><strong>Status:</strong> ⏳ Pending Deposit Verification</p>
         </div>
 
-        <p style="font-size: 0.85rem; color: #636e72; text-align: center;">Don't be late! 😉</p>
+        <p style="font-size: 0.85rem; color: #cbd5e1;">Don't be late! 😉</p>
     </div>
 </div>
 
 <script>
-    function goToPayment() {
-        const selectedName = document.querySelector('input[name="Who is booking"]:checked');
-        const selectedDate = document.querySelector('input[name="Selected Date"]:checked');
-        const selectedTime = document.querySelector('input[name="Selected Time"]:checked');
+    // Generate twinkling stars background
+    const starsContainer = document.getElementById('starsBg');
+    for (let i = 0; i < 40; i++) {
+        const star = document.createElement('div');
+        star.className = 'star';
+        star.style.width = `${Math.random() * 3 + 1}px`;
+        star.style.height = star.style.width;
+        star.style.top = `${Math.random() * 100}%`;
+        star.style.left = `${Math.random() * 100}%`;
+        star.style.setProperty('--duration', `${Math.random() * 3 + 1.5}s`);
+        starsContainer.appendChild(star);
+    }
 
-        if (!selectedName || !selectedDate || !selectedTime) {
-            alert('Please select a name, date, and time first!');
+    let currentStep = 1;
+
+    function nextStep(stepNumber) {
+        document.getElementById(`step${currentStep}`).classList.remove('active');
+        currentStep = stepNumber;
+        document.getElementById(`step${currentStep}`).classList.add('active');
+    }
+
+    function selectOption(fieldName, value, element) {
+        const parent = element.parentElement;
+        const cards = parent.querySelectorAll('.option-card');
+        cards.forEach(c => c.classList.remove('selected'));
+        element.classList.add('selected');
+
+        if (fieldName === 'Who is booking') document.getElementById('input_who').value = value;
+        if (fieldName === 'Selected Time') document.getElementById('input_time').value = value;
+    }
+
+    function selectDate(value, element) {
+        const grid = element.parentElement;
+        const dates = grid.querySelectorAll('.cal-date');
+        dates.forEach(d => d.classList.remove('selected'));
+        element.classList.add('selected');
+        document.getElementById('input_date').value = value;
+    }
+
+    function validateStep(step) {
+        if (step === 2 && !document.getElementById('input_who').value) {
+            alert('Please select who is booking!');
             return;
         }
-
-        document.getElementById('step1').style.display = 'none';
-        document.getElementById('step2').style.display = 'block';
+        if (step === 3 && !document.getElementById('input_time').value) {
+            alert('Please select a time!');
+            return;
+        }
+        if (step === 4 && !document.getElementById('input_date').value) {
+            alert('Please pick a date from the calendar!');
+            return;
+        }
+        nextStep(step + 1);
     }
 
     const form = document.getElementById('bookingForm');
-    const confirmation = document.getElementById('confirmationScreen');
-
     form.addEventListener('submit', async function(e) {
         e.preventDefault();
+        
+        const paymentInput = document.getElementById('input_payment').value;
+        if (!paymentInput) {
+            alert('Please enter your payment reference / name!');
+            return;
+        }
 
-        const name = document.querySelector('input[name="Who is booking"]:checked').value;
-        const date = document.querySelector('input[name="Selected Date"]:checked').value;
-        const time = document.querySelector('input[name="Selected Time"]:checked').value;
+        document.getElementById('resName').textContent = document.getElementById('input_who').value;
+        document.getElementById('resTime').textContent = document.getElementById('input_time').value;
+        document.getElementById('resDate').textContent = document.getElementById('input_date').value;
 
-        document.getElementById('resName').textContent = name;
-        document.getElementById('resDate').textContent = date;
-        document.getElementById('resTime').textContent = time;
-
-        form.style.display = 'none';
-        confirmation.style.display = 'block';
+        nextStep(7);
 
         const formData = new FormData(form);
         try {
@@ -295,7 +488,7 @@
                 headers: { 'Accept': 'application/json' }
             });
         } catch (err) {
-            console.log('Submission complete!');
+            console.log('Submission completed');
         }
     });
 </script>
