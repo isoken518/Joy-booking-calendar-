@@ -1,0 +1,304 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Date with Joy ✨</title>
+    <style>
+        :root {
+            --primary-color: #ff6b81;
+            --bg-color: #fff0f3;
+            --card-bg: #ffffff;
+            --text-color: #2d3436;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            margin: 0;
+            padding: 20px;
+            box-sizing: border-box;
+        }
+
+        .container {
+            background: var(--card-bg);
+            border-radius: 20px;
+            padding: 28px;
+            max-width: 420px;
+            width: 100%;
+            box-shadow: 0 10px 25px rgba(255, 107, 129, 0.15);
+            border: 2px solid #ffeaa7;
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        h1 {
+            color: #d63031;
+            font-size: 1.6rem;
+            margin-bottom: 8px;
+        }
+
+        p.sub-title {
+            font-size: 0.95rem;
+            color: #636e72;
+            margin: 4px 0;
+        }
+
+        .badge {
+            background-color: #ff7675;
+            color: white;
+            font-size: 0.75rem;
+            font-weight: bold;
+            padding: 4px 12px;
+            border-radius: 12px;
+            display: inline-block;
+            margin-top: 6px;
+        }
+
+        .section-title {
+            font-weight: 600;
+            margin-top: 18px;
+            margin-bottom: 8px;
+            font-size: 0.95rem;
+            color: #2d3436;
+        }
+
+        .radio-group {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+
+        .radio-label {
+            display: flex;
+            align-items: center;
+            padding: 10px 14px;
+            border: 2px solid #f1f2f6;
+            border-radius: 12px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            font-size: 0.95rem;
+        }
+
+        .radio-label:hover {
+            border-color: var(--primary-color);
+            background-color: #fff0f3;
+        }
+
+        input[type="radio"] {
+            margin-right: 12px;
+            accent-color: var(--primary-color);
+        }
+
+        input[type="text"] {
+            width: 100%;
+            padding: 12px;
+            border: 2px solid #f1f2f6;
+            border-radius: 12px;
+            font-size: 0.95rem;
+            box-sizing: border-box;
+            margin-top: 8px;
+        }
+
+        button {
+            width: 100%;
+            background-color: var(--primary-color);
+            color: white;
+            border: none;
+            padding: 14px;
+            font-size: 1rem;
+            font-weight: bold;
+            border-radius: 12px;
+            cursor: pointer;
+            margin-top: 24px;
+            box-shadow: 0 4px 12px rgba(255, 107, 129, 0.3);
+            transition: background-color 0.2s;
+        }
+
+        button:hover {
+            background-color: #ee5253;
+        }
+
+        .fee-card {
+            background-color: #fff9db;
+            border: 1.5px dashed #fcc419;
+            border-radius: 12px;
+            padding: 14px;
+            text-align: center;
+            margin: 16px 0;
+        }
+
+        .fee-amount {
+            font-size: 1.4rem;
+            font-weight: 800;
+            color: #d9480f;
+            margin: 4px 0;
+        }
+
+        .payment-screen, .confirmation {
+            display: none;
+        }
+
+        .summary-box {
+            background: #fff0f3;
+            border-radius: 12px;
+            padding: 16px;
+            margin: 16px 0;
+            text-align: left;
+        }
+
+        .bank-details {
+            background: #f8f9fa;
+            border: 1px solid #e9ecef;
+            border-radius: 10px;
+            padding: 12px;
+            margin-top: 10px;
+        }
+
+        .bank-details p {
+            margin: 6px 0;
+            font-size: 0.9rem;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <form id="bookingForm" action="https://formspree.io/f/Joyclifford71" method="POST">
+        
+        <!-- STEP 1: DATE & TIME SELECTION -->
+        <div id="step1">
+            <div class="header">
+                <h1>✨ Joy’s Booking Calendar ✨</h1>
+                <p class="sub-title">Congratulations! You’ve been selected to book a date with Joy.</p>
+                <div class="badge">🔥 Limited Availability — Book Quickly!</div>
+            </div>
+
+            <div class="section-title">Who’s booking?</div>
+            <div class="radio-group">
+                <label class="radio-label"><input type="radio" name="Who is booking" value="Collins" required> Collins</label>
+                <label class="radio-label"><input type="radio" name="Who is booking" value="We met today"> We met today</label>
+                <label class="radio-label"><input type="radio" name="Who is booking" value="Mr Who?"> Mr Who?</label>
+                <label class="radio-label"><input type="radio" name="Who is booking" value="Babe ❤️"> Babe ❤️</label>
+                <label class="radio-label"><input type="radio" name="Who is booking" value="Secret Admirer 🤫"> Secret Admirer 🤫</label>
+                <label class="radio-label"><input type="radio" name="Who is booking" value="VIP Special Guest ✨"> VIP Special Guest ✨</label>
+            </div>
+
+            <div class="section-title">Choose your date</div>
+            <div class="radio-group">
+                <label class="radio-label"><input type="radio" name="Selected Date" value="Wednesday, Sep 30" required> 📅 Wednesday, Sep 30</label>
+                <label class="radio-label"><input type="radio" name="Selected Date" value="Friday, Oct 2"> 📅 Friday, Oct 2</label>
+                <label class="radio-label"><input type="radio" name="Selected Date" value="Monday, Oct 5"> 📅 Monday, Oct 5</label>
+            </div>
+
+            <div class="section-title">Choose your time</div>
+            <div class="radio-group">
+                <label class="radio-label"><input type="radio" name="Selected Time" value="6:00 PM" required> 🕐 6:00 PM</label>
+                <label class="radio-label"><input type="radio" name="Selected Time" value="7:30 PM"> 🕐 7:30 PM</label>
+                <label class="radio-label"><input type="radio" name="Selected Time" value="8:00 PM"> 🕐 8:00 PM</label>
+            </div>
+
+            <button type="button" onclick="goToPayment()">PROCEED TO PAYMENT 💳</button>
+        </div>
+
+        <!-- STEP 2: PAYMENT SCREEN -->
+        <div id="step2" class="payment-screen">
+            <div class="header">
+                <h1>💳 Confirm Booking Fee</h1>
+                <p class="sub-title">To secure your reservation spot, a commitment fee is required.</p>
+            </div>
+
+            <div class="fee-card">
+                <div style="font-size: 0.85rem; color: #868e96; text-transform: uppercase;">Reservation Fee</div>
+                <div class="fee-amount">₦30,000</div>
+                <div style="font-size: 0.8rem; color: #495057;">Non-refundable deposit</div>
+            </div>
+
+            <div class="bank-details">
+                <p><strong>Bank:</strong> OPay</p>
+                <p><strong>Account Number:</strong> 641 661 6399</p>
+                <p><strong>Account Name:</strong> ISOKEN JOY CLIFFORD</p>
+            </div>
+
+            <div class="section-title">Enter Sender Name / Payment Reference:</div>
+            <input type="text" name="Payment Reference" placeholder="e.g. Paid via Collins / Transfer Ref" required>
+
+            <button type="submit">CONFIRM & BOOK DATE 💕</button>
+        </div>
+
+    </form>
+
+    <!-- STEP 3: FINAL CONFIRMATION -->
+    <div class="confirmation" id="confirmationScreen">
+        <div class="header">
+            <h2>YOU’RE BOOKED! 💕</h2>
+            <p class="sub-title">Your date request & payment details have been logged!</p>
+        </div>
+        
+        <div class="summary-box">
+            <p><strong>Appointment:</strong> Date with Joy</p>
+            <p><strong>Booked By:</strong> <span id="resName"></span></p>
+            <p><strong>Date:</strong> <span id="resDate"></span></p>
+            <p><strong>Time:</strong> <span id="resTime"></span></p>
+            <p><strong>Status:</strong> ⏳ Pending Deposit Verification (₦30,000)</p>
+        </div>
+
+        <p style="font-size: 0.85rem; color: #636e72; text-align: center;">Don't be late! 😉</p>
+    </div>
+</div>
+
+<script>
+    function goToPayment() {
+        const selectedName = document.querySelector('input[name="Who is booking"]:checked');
+        const selectedDate = document.querySelector('input[name="Selected Date"]:checked');
+        const selectedTime = document.querySelector('input[name="Selected Time"]:checked');
+
+        if (!selectedName || !selectedDate || !selectedTime) {
+            alert('Please select a name, date, and time first!');
+            return;
+        }
+
+        document.getElementById('step1').style.display = 'none';
+        document.getElementById('step2').style.display = 'block';
+    }
+
+    const form = document.getElementById('bookingForm');
+    const confirmation = document.getElementById('confirmationScreen');
+
+    form.addEventListener('submit', async function(e) {
+        e.preventDefault();
+
+        const name = document.querySelector('input[name="Who is booking"]:checked').value;
+        const date = document.querySelector('input[name="Selected Date"]:checked').value;
+        const time = document.querySelector('input[name="Selected Time"]:checked').value;
+
+        document.getElementById('resName').textContent = name;
+        document.getElementById('resDate').textContent = date;
+        document.getElementById('resTime').textContent = time;
+
+        form.style.display = 'none';
+        confirmation.style.display = 'block';
+
+        const formData = new FormData(form);
+        try {
+            await fetch(form.action, {
+                method: 'POST',
+                body: formData,
+                headers: { 'Accept': 'application/json' }
+            });
+        } catch (err) {
+            console.log('Submission complete!');
+        }
+    });
+</script>
+
+</body>
+</html>
